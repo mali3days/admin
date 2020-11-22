@@ -1,0 +1,54 @@
+@import "~video.js/dist/video-js.css";
+
+:host {
+  display: block;
+  padding: 10px;
+}
+
+.vjs-text-track-display {
+  pointer-events: auto !important;
+}
+
+.audio_play_button:hover {
+  border: 1px solid #ccc;
+  color: #000;
+}
+
+.vjs-subs .word {
+  cursor: pointer;
+  border-bottom: 1px dotted #fff;
+}
+
+.vjs-subs .word:hover {
+  color: white;
+  background-color: #4285f4 !important;
+  text-decoration: none;
+}
+
+#popover {
+  background: red;
+  border-radius: 2px;
+  padding: 3px;
+  bottom: 4px !important;
+  color: white;
+}
+
+/* TODO: check if it's works !*/
+#popper[data-popper-reference-hidden] {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* TODO: check if it's works !*/
+#popper[data-popper-escaped] {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+video {
+  height: 100% !important;
+}
+
+#qrcode img {
+  width: 140px;
+}

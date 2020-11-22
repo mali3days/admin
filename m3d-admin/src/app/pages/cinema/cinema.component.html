@@ -1,0 +1,18 @@
+<div class="row">
+  <video-player [options]="
+    {
+      fluid: false,
+      aspectRatio: '16:9',
+      autoplay: true,
+      sources: [
+        {
+          src: 'http://clips.vorwaerts-gmbh.de/VfE_html5.mp4',
+          type: 'video/mp4'
+        }
+        ]
+      }">
+    </video-player>
+  </div>
+
+<!-- src: 'http://localhost:5000/demo.m3u8', -->
+<!-- type: 'application/x-mpegURL' -->

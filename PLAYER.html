@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link
+    href="https://unpkg.com/video.js@7/dist/video-js.min.css"
+    rel="stylesheet"
+  />
+  <style>
+
+    .vjs-text-track-display {
+        pointer-events: auto;
+    }
+      
+    .audio_play_button:hover {
+        border: 1px solid #ccc;
+        color: #000
+    }
+    
+    .vjs-subs .word {
+        cursor: pointer;
+        border-bottom: 1px dotted #fff
+    }
+    
+    .vjs-subs .word:hover {
+        color: white;
+        background-color: #4285f4 !important;
+        text-decoration: none
+    }
+    </style>
+</head>
+<body>
+
+<!-- <link
+  href="https://unpkg.com/@videojs/themes@1.0.0/dist/city/index.css"
+  rel="stylesheet"
+/> -->
+
+<div style="display:inline-block">
+  <button>Click me!</button>
+  <paper-tooltip>Tooltip text</paper-tooltip>
+</div>
+
+<div>
+  <button id="btn">Click me!</button>
+  <paper-tooltip for="btn">Tooltip text</paper-tooltip>
+</div>
+
+<video-js id="vid1" width=600 height=300 class="vjs-default-skin" controls>
+    <source
+        id="my-video"
+        class="video-js"
+        controls
+        preload="auto"
+        width="640"
+        height="264"
+        poster="MY_VIDEO_POSTER.jpg"
+        data-setup="{}"
+       src="demo/demo.m3u8"
+       type="application/x-mpegURL">
+       <track id="trackk" kind="captions" src="The Lord of the Rings - The Fellowship of the Ring - Extended.vtt" srclang="en" label="English" default>
+  </video-js>
+  <!-- <script src="https://vjs.zencdn.net/7.7.5/video.js"></script> -->
+
+  <!-- <script type="module">
+    // import './node_modules/@polymer/paper-tooltip/paper-tooltip.js';
+    import './node_modules/@polymer/paper-tooltip/paper-tooltip.js';
+  </script> -->
+  <script src="./video.js "></script>
+  <!-- video.js-master\src\js -->
+  <!-- <script src="https://unpkg.com/browse/@videojs/http-streaming@1.13.3/dist/videojs-http-streaming.min.js"></script> -->
+  <script>
+  var player = videojs('vid1', {
+    html5: {
+        nativeTextTracks: false
+    }
+  });
+  
+  console.log(player);
+//   player.play();
+  let tracks = player.textTracks();
+
+  var subss = document.querySelector('.vjs-text-track-display')
+  subss.addEventListener('click', async (e) => {
+    if (e.target.classList.contains('word')) {
+      console.log('event: ', e);
+      console.log('word:', e.target.innerText);
+      player.pause();
+
+      const translateApi = `http://192.168.0.106:5000/translate?text=${e.target.innerText}`;
+      const options = {
+        method: 'GET',
+        mode: 'cors',
+      };
+      const translateText = await fetch(translateApi, options).then(res => res.json());
+
+      console.log(translateText);
+    }
+  })
+
+  // var g = $(this);
+  //       var e = g.attr("id");
+  //       var f = g.text();
+  //       var a, c, h;
+  //       f = f.replace(/[\.+|\,|\!|\?|\"|:|;]/, "");
+  //       f = f.replace(/(^[\'])|([\']$)/, "");
+  //       if (/'s$/.test(f)) {
+  //           f = f.replace(/'s$/, "")
+  //       }
+  //       var d = f.toLowerCase();
+  //       var b = $("#userid").data("userid");
+  </script>
+</body>
+</html>
+
