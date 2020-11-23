@@ -1,8 +1,8 @@
 import { Component, ElementRef, Input, OnDestroy, AfterViewInit, ViewChild, ViewEncapsulation } from '@angular/core';
-
-import videojs from './video.js';
+import * as io from 'socket.io-client';
 import { createPopper } from '@popperjs/core';
 
+import videojs from './video.js';
 
 @Component({
   selector: 'video-player',
@@ -31,6 +31,7 @@ export class VideoPlayerComponent  implements AfterViewInit, OnDestroy  {
       }[],
   };
   player: videojs.Player;
+  socket;
   popoverElement;
 
   constructor(
@@ -45,7 +46,38 @@ export class VideoPlayerComponent  implements AfterViewInit, OnDestroy  {
       console.log('onPlayerReady', this);
     });
 
+    // TODO: remove later
+    // window.player = this.player;
+
+    this.setupSocketConnection();
     this.setupTrack();
+  }
+
+  setupSocketConnection() {
+    this.socket = io('http://localhost:3000');
+
+    this.socket.on('connect', function() {
+      console.log('Connected');
+    });
+    this.socket.on('events', function(data) {
+      console.log('event', data);
+    });
+    this.socket.on('play', (data) => {
+      console.log('data: ', data);
+
+      if (data && this.player) {
+        this.player.play();
+      } else if (this.player) {
+        this.player.pause();
+      }
+
+    });
+    this.socket.on('exception', function(data) {
+      console.log('event', data);
+    });
+    this.socket.on('disconnect', function() {
+      console.log('Disconnected');
+    });
   }
 
   setupTrack() {
@@ -66,22 +98,20 @@ export class VideoPlayerComponent  implements AfterViewInit, OnDestroy  {
 
         this.player.pause();
 
-        const translateApi = `http://192.168.0.106:5000/translate?text=${element.innerText}`;
+        const translateApi = `http://192.168.0.132:5000/translate?text=${element.innerText}`;
         const options = {
             method: 'GET',
             mode: 'cors',
         };
-        const translateText = 'MOCK TRANSLATE';
-        // const translateText = await fetch(translateApi, options).then(res => res.json());
+
+        const response = await fetch(translateApi, options).then(res => res.json());
 
         const wordElement = document.getElementById(id);
         const wordElementFontSize = getComputedStyle(wordElement).fontSize;
 
         this.popoverElement.style.fontSize = wordElementFontSize;
 
-        console.log(translateText);
-
-        this.popoverElement.innerText = translateText;
+        this.popoverElement.innerText = response.translated;
 
         // this.set('translatedText', translateText.translated);
         // this.set('wordId', id);
@@ -98,7 +128,7 @@ export class VideoPlayerComponent  implements AfterViewInit, OnDestroy  {
     });
 
     setTimeout(() => {
-      var tracks = this.player.textTracks().tracks_[1];
+      var tracks = this.player.textTracks()[0];
 
       if (tracks) {
         tracks.addEventListener('cuechange', (e) => {
@@ -111,13 +141,13 @@ export class VideoPlayerComponent  implements AfterViewInit, OnDestroy  {
             playerElement.removeChild(this.popoverElement);
           }
 
-          const activeCue = this.player.textTracks()[1].activeCues[0];
+          const activeCue = this.player.textTracks()[0].activeCues[0];
 
           if (activeCue) {
             // console.log(activeCue.text)
-            // socket.emit('activeCue', activeCue.text, response =>
-            //   console.log('activeCueWasSend:', response),
-            // );
+            this.socket.emit('activeCue', activeCue.text, response =>
+              console.log('activeCueWasSend:', response),
+            );
           } else {
             console.log('no cue text');
           }
