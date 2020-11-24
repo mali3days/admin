@@ -15,7 +15,6 @@ import videojs from './video.js';
       <div id="popover"></div>
     </div>
   `,
-  // [[translatedText]]
   encapsulation: ViewEncapsulation.None,
 })
 export class VideoPlayerComponent  implements AfterViewInit, OnDestroy  {
@@ -40,14 +39,9 @@ export class VideoPlayerComponent  implements AfterViewInit, OnDestroy  {
   ) { }
 
   ngAfterViewInit() {
-    // instantiate Video.js
-    console.log('ngAfterViewInit!!!');
     this.player = videojs(this.target.nativeElement, this.options, function onPlayerReady() {
       console.log('onPlayerReady', this);
     });
-
-    // TODO: remove later
-    // window.player = this.player;
 
     this.setupSocketConnection();
     this.setupTrack();
@@ -87,11 +81,7 @@ export class VideoPlayerComponent  implements AfterViewInit, OnDestroy  {
     subss.addEventListener('click', async (e) => {
       const element = e.target as HTMLElement;
 
-      console.log(e);
-      console.log(element);
         if (element.classList.contains('word')) {
-        console.log('event: ', e);
-        console.log('id: ', element.id);
         const id = element.id;
 
         console.log('word:', element.innerText);
@@ -110,20 +100,13 @@ export class VideoPlayerComponent  implements AfterViewInit, OnDestroy  {
         const wordElementFontSize = getComputedStyle(wordElement).fontSize;
 
         this.popoverElement.style.fontSize = wordElementFontSize;
-
         this.popoverElement.innerText = response.translated;
-
-        // this.set('translatedText', translateText.translated);
-        // this.set('wordId', id);
 
         const popperInstance = createPopper(wordElement, this.popoverElement, {
           placement: 'top',
         });
 
         this.player.el().appendChild(this.popoverElement);
-
-        // TODO: delete comment
-        // console.log(popperInstance);
         }
     });
 
@@ -132,9 +115,6 @@ export class VideoPlayerComponent  implements AfterViewInit, OnDestroy  {
 
       if (tracks) {
         tracks.addEventListener('cuechange', (e) => {
-          console.log('CUE CHANGED: ', e)
-          // this.set('translatedText');
-          // this.set('wordId');
           const playerElement = this.player.el();
 
           if (playerElement.contains(this.popoverElement)) {
@@ -144,14 +124,12 @@ export class VideoPlayerComponent  implements AfterViewInit, OnDestroy  {
           const activeCue = this.player.textTracks()[0].activeCues[0];
 
           if (activeCue) {
-            // console.log(activeCue.text)
             this.socket.emit('activeCue', activeCue.text, response =>
               console.log('activeCueWasSend:', response),
             );
           } else {
             console.log('no cue text');
           }
-          // this.set('activeCue', activeCue);
         });
       }
     }, 1000)
