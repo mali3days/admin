@@ -1,0 +1,13 @@
+* -cur_console:f -cur_console:d:C:\projects\video-server-go -cur_console:t:video-player-v1-fe -cur_console:C:"C:\Program Files\cmder\icons\cmder.ico" cmd /k ""%ConEmuDir%\..\init.bat" " && npm start
+
+* -cur_console:fs1T52H -cur_console:d:C:\projects\video-server-go\m3d-admin -cur_console:t:admin-proj -cur_console:C:"C:\Program Files\cmder\icons\cmder.ico" cmd /k ""%ConEmuDir%\..\init.bat" " && npm start
+
+* -cur_console:fs1T52V -cur_console:d:C:\projects\video-server-go\video-server-nest -cur_console:t:video-player-be -cur_console:C:"C:\Program Files\cmder\icons\cmder.ico" cmd /k ""%ConEmuDir%\..\init.bat" " && npm start
+
+* -cur_console:fs1T71H -cur_console:d:C:\projects\video-server-go -cur_console:t:video-player-v1-view-two-fe -cur_console:C:"C:\Program Files\cmder\icons\cmder.ico" cmd /k ""%ConEmuDir%\..\init.bat" " && npm start
+
+* -cur_console:s4T59H -cur_console:d:C:\projects\video-server-go\admin -cur_console:t:ng-template-fe -cur_console:C:"C:\Program Files\cmder\icons\cmder.ico" cmd /k ""%ConEmuDir%\..\init.bat" " && npm start
+
+* -cur_console:fs3T32H -cur_console:d:C:\projects\video-server-go -cur_console:t:serve-subtitles-be -cur_console:C:"C:\Program Files\cmder\icons\cmder.ico" cmd /k ""%ConEmuDir%\..\init.bat" " && npx serve . --cors
+
+>* -cur_console:fs2T74V -cur_console:d:C:\projects\video-server-go -cur_console:t:working-dir -cur_console:C:"C:\Program Files\cmder\icons\cmder.ico" cmd /k ""%ConEmuDir%\..\init.bat" "

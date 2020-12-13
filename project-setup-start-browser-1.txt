@@ -1,0 +1,6 @@
+https://github.com/mali3days/admin
+http://localhost:8081/video
+http://localhost:8000/view2
+http://localhost:5000/
+http://localhost:4200/pages/dashboard
+http://localhost:4201/pages/cinema
