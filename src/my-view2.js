@@ -54,7 +54,7 @@ class MyView2 extends PolymerElement {
   }
 
   socketConnection() {
-    const socket = io('http://localhost:3000');
+    const socket = io('http://192.168.0.104:3000');
     this.set('socket', socket);
 
     socket.on('connect', function() {

@@ -30,7 +30,32 @@ import {
 
     @SubscribeMessage('play')
     async play(@MessageBody() data: boolean): Promise<boolean> {
+      console.log('play: ', data);
       this.server.emit('play', data)
+
+      return true;
+    }
+
+    @SubscribeMessage('volumechange')
+    async volumechange(@MessageBody() data: boolean): Promise<boolean> {
+      console.log('volumechange: ', data);
+      this.server.emit('volumechange', data)
+
+      return true;
+    }
+
+    @SubscribeMessage('time')
+    async time(@MessageBody() data: boolean): Promise<boolean> {
+      console.log('time: ', data);
+      this.server.emit('time', data)
+
+      return true;
+    }
+
+    @SubscribeMessage('currentTime')
+    async currentTime(@MessageBody() data: boolean): Promise<boolean> {
+      console.log('currentTime: ', data);
+      this.server.emit('currentTime', data)
 
       return true;
     }

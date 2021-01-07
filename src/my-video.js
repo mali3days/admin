@@ -112,7 +112,7 @@ class Video extends PolymerElement {
   }
 
   socketConnection() {
-    const socket = io('http://localhost:3000');
+    const socket = io('http://192.168.0.104:3000');
     console.log(socket);
 
     socket.on('connect', function() {
@@ -184,7 +184,7 @@ class Video extends PolymerElement {
 
         player.pause();
 
-        const translateApi = `http://192.168.0.106:5000/translate?text=${e.target.innerText}`;
+        const translateApi = `http://192.168.0.132:5000/translate?text=${e.target.innerText}`;
         const options = {
             method: 'GET',
             mode: 'cors',

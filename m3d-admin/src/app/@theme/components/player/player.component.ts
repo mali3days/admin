@@ -1,5 +1,8 @@
 import { Component, HostBinding, Input, OnDestroy } from '@angular/core';
-import { PlayerService, Track } from '../../../../@core/utils/player.service';
+import io from 'socket.io-client';
+
+import { PlayerService, Track } from '../../../@core/utils/player.service';
+
 
 @Component({
   selector: 'ngx-player',
@@ -12,12 +15,16 @@ export class PlayerComponent implements OnDestroy {
   collapsed: boolean;
 
   track: Track;
+  socket;
+  activeCue;
+  currentTime;
+  duration;
   player: HTMLAudioElement;
   shuffle: boolean;
 
   constructor(private playerService: PlayerService) {
     this.track = this.playerService.random();
-    this.createPlayer();
+    this.createSocket();
   }
 
   ngOnDestroy() {
@@ -53,8 +60,10 @@ export class PlayerComponent implements OnDestroy {
   playPause() {
     if (this.player.paused) {
       this.player.play();
+      this.socket.emit('play', true);
     } else {
       this.player.pause();
+      this.socket.emit('play', false);
     }
   }
 
@@ -68,6 +77,9 @@ export class PlayerComponent implements OnDestroy {
 
   setVolume(volume: number) {
     this.player.volume = volume / 100;
+
+    this.socket.emit('volumechange', this.player.volume);
+    console.log(this.player.volume);
   }
 
   getVolume(): number {
@@ -75,17 +87,37 @@ export class PlayerComponent implements OnDestroy {
   }
 
   setProgress(duration: number) {
-    this.player.currentTime = this.player.duration * duration / 100;
+    this.currentTime = this.duration * duration / 100;
+    this.socket.emit('currentTime', this.currentTime);
   }
 
   getProgress(): number {
-    return this.player.currentTime / this.player.duration * 100 || 0;
+    // return this.player.currentTime / this.player.duration * 100 || 0;
+    return this.currentTime / this.duration * 100 || 0;
   }
 
-  private createPlayer() {
+  private createSocket() {
+    const socket = io('http://192.168.0.104:3000');
     this.player = new Audio();
-    this.player.onended = () => this.next();
-    this.setTrack();
+
+    socket.on('connect', () => {
+      console.log('socket is connected');
+    });
+    socket.on('activeCue', (data) => {
+      console.log('activeCue', data);
+      this.activeCue = data;
+    });
+    socket.on('disconnect', () => {
+      console.log('socket is disconnected');
+    });
+    socket.on('time', (data) => {
+      console.log(data);
+      console.log('time is changed');
+      this.currentTime = data.currentTime;
+      this.duration = data.duration;
+    });
+
+    this.socket = socket;
   }
 
   private reload() {

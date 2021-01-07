@@ -26,7 +26,7 @@ import { ElectricityComponent } from './electricity/electricity.component';
 import { ElectricityChartComponent } from './electricity/electricity-chart/electricity-chart.component';
 import { WeatherComponent } from './weather/weather.component';
 import { SolarComponent } from './solar/solar.component';
-import { PlayerComponent } from './rooms/player/player.component';
+// import { PlayerComponent } from './rooms/player/player.component';
 import { TrafficComponent } from './traffic/traffic.component';
 import { TrafficChartComponent } from './traffic/traffic-chart.component';
 import { FormsModule } from '@angular/forms';
@@ -60,7 +60,7 @@ import { FormsModule } from '@angular/forms';
     ElectricityComponent,
     ElectricityChartComponent,
     WeatherComponent,
-    PlayerComponent,
+    // PlayerComponent,
     SolarComponent,
     TrafficComponent,
     TrafficChartComponent,

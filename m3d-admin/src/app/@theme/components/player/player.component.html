@@ -3,10 +3,11 @@
 
   <nb-card-body class="body">
     <div class="track-info">
-      <div class="cover" style.background-image="url('{{track.cover}}')"></div>
+      <!-- <div class="cover" style.background-image="url('{{track.cover}}')"></div> -->
       <div class="details">
-        <h4 [class.subtitle]="collapsed">{{ track.name }}</h4>
-        <span>{{ track.artist }}</span>
+        <!-- <h4 [class.subtitle]="collapsed">{{ track.name }}</h4> -->
+        <!-- <span>{{ track.artist }}</span> -->
+        <span>{{ activeCue }}</span>
       </div>
     </div>
 
@@ -17,25 +18,25 @@
     </div>
 
     <div class="timing">
-      <small class="current">{{ player.currentTime | timing }}</small>
-      <small class="remaining">- {{ player.duration - player.currentTime | timing }}</small>
+      <small class="current">{{ currentTime | timing }}</small>
+      <small class="remaining">- {{ duration - currentTime | timing }}</small>
     </div>
 
     <div class="controls">
-      <button class="control-button" nbButton ghost size="tiny" (click)="toggleShuffle()" [class.on]="shuffle">
+      <button class="control-button" nbButton ghost size="tiny" (click)="toggleShuffle()" [class.on]="shuffle" style="visibility: hidden;">
         <nb-icon icon="shuffle-2-outline" pack="eva"></nb-icon>
       </button>
-      <button class="control-button" nbButton ghost size="medium" (click)="prev()">
+      <button class="control-button" nbButton ghost size="medium" (click)="prev()" style="visibility: hidden;">
         <nb-icon class="skip" icon="skip-back-outline" pack="eva"></nb-icon>
       </button>
       <button class="control-button play-button" nbButton ghost size="medium" (click)="playPause()">
         <nb-icon class="play" [icon]="player.paused ? 'play-circle-outline' : 'pause-circle-outline'" pack="eva">
         </nb-icon>
       </button>
-      <button class="control-button skip-forward-button" nbButton ghost size="medium" (click)="next()">
+      <button class="control-button skip-forward-button" nbButton ghost size="medium" (click)="next()" style="visibility: hidden;">
         <nb-icon class="skip" icon="skip-forward-outline" pack="eva"></nb-icon>
       </button>
-      <button class="control-button" nbButton ghost size="tiny" (click)="toggleLoop()" [class.on]="player.loop">
+      <button class="control-button" nbButton ghost size="tiny" (click)="toggleLoop()" [class.on]="player.loop" style="visibility: hidden;">
         <nb-icon icon="repeat-outline" pack="eva"></nb-icon>
       </button>
     </div>
