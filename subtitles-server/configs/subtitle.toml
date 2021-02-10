@@ -1,2 +1,0 @@
-bind_addr  = ":5000"
-log_level = "debug"
